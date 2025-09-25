@@ -31,7 +31,7 @@ const PartnerWithUs = () => {
           {/* Right Side - Testimonials */}
           <div className="w-full md:w-2/3 grid md:grid-cols-2 gap-8">
             {/* Card 1 */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
+            <div className="bg-gray-800 rounded-2xl shadow-lg p-8">
               <Image
                 src="/quote.png"
                 alt="quote"
@@ -39,7 +39,7 @@ const PartnerWithUs = () => {
                 height={50}
                 className="mb-4"
               />
-              <p className="text-gray-700 mb-6">
+              <p className="text-gray-300 mb-6">
                 Design Monks offers producers a cost-effective selling tool.
                 Having the ability to post prices that you want on an exchange
                 visible.
@@ -61,10 +61,10 @@ const PartnerWithUs = () => {
                       height={20}
                     />
                   </div>
-                  <p className="font-semibold text-[rgba(22, 25, 25, 1)] font-family:poppins font-weight:500">
+                  <p className="font-semibold text-white font-family:poppins font-weight:500">
                     Thomas Magnum
                   </p>
-                  <p className="text-sm text-[rgba(69, 71, 71, 1)] font-family:poppins font-weight:400">
+                  <p className="text-sm text-gray-400 font-family:poppins font-weight:400">
                     Barellon NSW
                   </p>
                 </div>
@@ -72,7 +72,7 @@ const PartnerWithUs = () => {
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
+            <div className="bg-gray-800 rounded-2xl shadow-lg p-8">
               <Image
                 src="/quote.png"
                 alt="quote"
@@ -80,7 +80,7 @@ const PartnerWithUs = () => {
                 height={50}
                 className="mb-4"
               />
-              <p className="text-gray-700 mb-6">
+              <p className="text-gray-300 mb-6">
                 Design Monks offers producers a cost-effective selling tool.
                 Having the ability to post prices that you want on an exchange
                 visible.
@@ -102,10 +102,10 @@ const PartnerWithUs = () => {
                       height={20}
                     />
                   </div>
-                  <p className="font-semibold text-[rgba(22, 25, 25, 1)] font-family:poppins font-weight:500">
+                  <p className="font-semibold text-white font-family:poppins font-weight:500">
                     Thomas Magnum
                   </p>
-                  <p className="text-sm text-[rgba(69, 71, 71, 1)] font-family:poppins font-weight:400">
+                  <p className="text-sm text-gray-400 font-family:poppins font-weight:400">
                     Barellon NSW
                   </p>
                 </div>
