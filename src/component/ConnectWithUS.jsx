@@ -10,6 +10,10 @@ const ConnectWithUs = () => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -18,9 +22,39 @@ const ConnectWithUs = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setShowSuccessModal(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -72,6 +106,13 @@ const ConnectWithUs = () => {
                   Transparent, And Secure For Everyone.
                 </p>
               </div>
+
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <div className="bg-red-500/20 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg">
+                  Sorry, there was an error sending your message. Please try again.
+                </div>
+              )}
 
               {/* Contact Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -154,27 +195,34 @@ const ConnectWithUs = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="group flex items-center gap-3 bg-cyan-400 hover:bg-cyan-300 text-black font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-400/25"
+                  disabled={isSubmitting}
+                  className="group flex items-center gap-3 bg-cyan-400 hover:bg-cyan-300 disabled:bg-cyan-400/50 disabled:cursor-not-allowed text-black font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-400/25 disabled:hover:transform-none disabled:hover:shadow-none"
                 >
-                  <span>Submit</span>
-                  <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-cyan-400"
-                    >
-                      <path
-                        d="M7 17L17 7M17 7H7M17 7V17"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
+                  <span>{isSubmitting ? 'Sending...' : 'Submit'}</span>
+                  {isSubmitting ? (
+                    <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
+                      <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  ) : (
+                    <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-cyan-400"
+                      >
+                        <path
+                          d="M7 17L17 7M17 7H7M17 7V17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  )}
                 </button>
               </form>
             </div>
@@ -184,6 +232,79 @@ const ConnectWithUs = () => {
 
       {/* Additional Background Effects */}
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowSuccessModal(false);
+            }
+          }}
+        >
+          <div 
+            className="bg-gradient-to-br from-[#0F1417] to-[#1a1f24] border border-cyan-400/30 rounded-2xl p-8 max-w-md w-full mx-4 relative overflow-hidden z-10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10 z-0">
+              <div className="absolute top-4 left-4 w-2 h-2 bg-cyan-400 rounded-full"></div>
+              <div className="absolute top-8 right-6 w-1 h-1 bg-cyan-400 rounded-full"></div>
+              <div className="absolute bottom-6 left-8 w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+              <div className="absolute bottom-4 right-4 w-1 h-1 bg-cyan-400 rounded-full"></div>
+            </div>
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors duration-200"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
+            {/* Success Icon */}
+            <div className="flex justify-center mb-6">
+              <div className="w-20 h-20 bg-cyan-400/20 rounded-full flex items-center justify-center">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-cyan-400">
+                  <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            {/* Success Message */}
+            <div className="text-center space-y-4 relative z-20">
+              <h3 className="text-2xl font-bold text-white mb-2">
+                Request Received!
+              </h3>
+              <p className="text-white/80 text-lg leading-relaxed">
+                Thank you for contacting TrustKeeper. We have received your message and will connect with you shortly.
+              </p>
+              <p className="text-cyan-400 text-sm">
+                Our team will get back to you within 24 hours.
+              </p>
+            </div>
+
+            {/* Action Button */}
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Got it button clicked!', showSuccessModal);
+                  setShowSuccessModal(false);
+                }}
+                className="bg-cyan-400 hover:bg-cyan-300 text-black font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-400/25 cursor-pointer relative z-20"
+                type="button"
+              >
+                Got it!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
