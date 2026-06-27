@@ -1,4 +1,4 @@
-export const LAST_UPDATED = "November 8, 2025";
+export const LAST_UPDATED = "November 8, 2026";
 
 export const termsAndConditions = [
   {
