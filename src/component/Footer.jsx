@@ -96,50 +96,6 @@ const Footer = () => {
           {/* Navigation Links */}
           <div className="mb-10">
             {/* Responsive: Reduced gap on mobile for better wrapping */}
-            <div className="flex justify-center gap-x-6 gap-y-4 md:gap-10 mb-5 flex-wrap text-[rgba(149,149,149,1)] text-[16px]">
-              <Link
-                href="/personal-loan"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                Personal Loan
-              </Link>
-              <Link
-                href="/one-card"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                One Card
-              </Link>
-              <Link
-                href="/savings"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                Savings
-              </Link>
-              <Link
-                href="/checking"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                Checking
-              </Link>
-              <Link
-                href="/contact"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                Contact
-              </Link>
-              <Link
-                href="/help"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                Help
-              </Link>
-              <Link
-                href="/support"
-                className=" hover:text-cyan-400 transition-colors duration-300"
-              >
-                Support
-              </Link>
-            </div>
             <div className="flex justify-center gap-x-6 gap-y-4 md:gap-10 flex-wrap text-[rgba(149,149,149,1)] text-[16px]">
               <Link
                 href="/personal-loan"
